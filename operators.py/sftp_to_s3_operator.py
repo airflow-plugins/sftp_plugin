@@ -1,6 +1,6 @@
 from airflow.models import BaseOperator
 from airflow.hooks.S3_hook import S3Hook
-from sftp_plugin.hooks.astroSSHHook import AstroSSHHook
+from airflow.hooks.ssh_hook import SSHHook
 from tempfile import NamedTemporaryFile
 
 
@@ -38,7 +38,7 @@ class SFTPToS3Operator(BaseOperator):
         self.s3_key = s3_key
 
     def execute(self, context):
-        ssh_hook = AstroSSHHook(ssh_conn_id=self.sftp_conn_id)
+        ssh_hook = SSHHook(ssh_conn_id=self.sftp_conn_id)
         s3_hook = S3Hook(self.s3_conn_id)
         ssh_client = ssh_hook.get_conn()
         sftp_client = ssh_client.open_sftp()
