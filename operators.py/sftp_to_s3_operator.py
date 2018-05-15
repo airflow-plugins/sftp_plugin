@@ -1,7 +1,8 @@
+from tempfile import NamedTemporaryFile
+
 from airflow.models import BaseOperator
 from airflow.hooks.S3_hook import S3Hook
 from airflow.hooks.ssh_hook import SSHHook
-from tempfile import NamedTemporaryFile
 
 
 class SFTPToS3Operator(BaseOperator):
